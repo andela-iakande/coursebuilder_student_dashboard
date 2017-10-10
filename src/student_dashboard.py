@@ -47,7 +47,7 @@ _TEMPLATES_PATH = os.path.join(_BASE_PATH, 'templates')
 class GlobalHandler(utils.BaseHandler):
     """Handler for requests scoped to the Course Builder instance."""
 
-    URL = '/global'
+    URL = '/student-dashboard'
 
     def get(self):
         template = jinja_utils.get_template('index.html', [_TEMPLATES_PATH])
@@ -88,7 +88,7 @@ def register_module():
         (NamespacedHandler.URL, NamespacedHandler),
     ]
     custom_module = custom_modules.Module(
-        'Hello World', 'Course Builder Hello World Module', global_handlers,
+        'Course Builder', 'Student-Dashboard Module', global_handlers,
         namespaced_handlers)
 
     return custom_module
