@@ -5,14 +5,20 @@
 <link rel="import" href="/modules/explorer/_static/components/utility/floating-sidebar.html">
 <link rel="import" href="/modules/explorer/_static/components/course-cards/course-card-grouper.html">
 <link rel="import" href="/modules/explorer/_static/components/filter-sidebar/filter-sidebar.html">
-<link rel="import" href="/modules/coursebuilder_student_dashboard/_static/dashboard-wrapper.html">
 <link rel="import" href="/modules/coursebuilder_student_dashboard/_static/components/top-bar/top-bar.html">
 
+<link rel="import" href="/modules/coursebuilder_student_dashboard/_static/components/pages/homepage.html">
+<link rel="import" href="/modules/coursebuilder_student_dashboard/_static/components/pages/certification.html">
+<link rel="import" href="/modules/coursebuilder_student_dashboard/_static/components/pages/tools-page.html">
+<link rel="import" href="/modules/coursebuilder_student_dashboard/_static/components/pages/feedback-page.html">
+<link rel="import" href="/modules/coursebuilder_student_dashboard/_static/components/pages/help-page.html">
+<link rel="import" href="/modules/coursebuilder_student_dashboard/_static/components/pages/events-page.html">
 
-<dom-module id="student-dashboard">
+<dom-module id="course-explorer">
   <template>
     <top-bar current-user="[[currentUser]]"></top-bar>
-   
+
+
     <template is="dom-if" if="[[loadDashboard]]">
       <iron-ajax
         auto url="/modules/gql/query"
@@ -23,10 +29,24 @@
       ></iron-ajax>
     </template>
 
-    <!-- The wrapper that embeds the student dashboard -->
-    <dashboard-wrapper loaded="[[dashboardLoaded]]" current-user="[[currentUser]]" dashboardcourses="[[dashboardCourses]]">
-    </dashboard-wrapper>
-    
+
+      <student-dashboard loaded="[[dashboardLoaded]]" current-user="[[currentUser]]" dashboardcourses="[[dashboardCourses]]">
+      </student-dashboard>
+
+
+    <home-page current-user="[[currentUser]]"></home-page>
+
+    <certification-page current-user="[[currentUser]]"></certification-page>
+
+    <tools-page></tools-page>
+
+    <feedback-page></feedback-page>
+
+    <help-page></help-page>
+
+    <events-page></events-page>
+
+
     <div id="explorer" class="page-wrapper">
       <style>
         #top-content {
@@ -109,8 +129,10 @@
                   </div>
                 </div>
               </template>
+
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -122,7 +144,7 @@
     }
 
     Polymer({
-      is: 'student-dashboard',
+      is: 'course-explorer',
       properties: {
         filterOptions: {
           type: Object,
@@ -172,7 +194,7 @@
           q: '{site {title, logo {url, altText},' +
           '  courseExplorer {extraContent}}, ' +
           'currentUser {' +
-          '  email, loggedIn, canViewDashboard, loginUrl (destUrl: "/student-dashboard"),' +
+          '  email, loggedIn, canViewDashboard, loginUrl (destUrl: "/#!explorer"),' +
           '  logoutUrl (destUrl: "/")}}'
         }
       },
@@ -307,7 +329,7 @@
             }
           }
 
-          // return true;
+          return true;
         })
       },
     })
