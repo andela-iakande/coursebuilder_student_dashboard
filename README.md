@@ -29,15 +29,28 @@ work with. Let's grab the student dashboard module, called `coursebuilder_studen
 
 Ensure you give the target container the same name as the module name else the __init__.py 
 will not be readable and this might cause import problems as well as failure in the running of your application,
-next:
+next: create a file titled install.sh. For instance, you can place the file in your desktop and copy the script below into it.
 
-```sh
-sh scripts/modules.sh \
-  --targets=coursebuilder_student_dashboard@https://github.com/andela-iakande/coursebuilder_student_dashboard.git
+```sh 
+  scripts/modules.sh \
+    --targets=coursebuilder_student_dashboard@https://github.com/andela-iakande/coursebuilder_student_dashboard.git
+
+  rm -f modules/gql/gql.py
+  mv modules/coursebuilder_student_dashboard/gql.py modules/gql/
+
+  rm -f modules/explorer/_static/components/top-bar/top-bar.html
+  mv modules/coursebuilder_student_dashboard/top-bar.html modules/explorer/_static/components/top-bar/
 ```
+After this process, 
+next,run:
 
-This will both download the student dashboard module and link it to Course Builder. Now you can
-start up Course Builder with the student dashboard module installed:
+  ```sh
+  ~/Desktop/install.sh
+  ```
+
+This script will both download the student dashboard module, replace some course builder components with appropriate components needed for it to work and also link it to Course Builder.
+
+ Now you can start up Course Builder with the student dashboard module installed:
 
 ```sh
 sh scripts/start_in_shell.sh
@@ -57,6 +70,8 @@ src/                   # Module source files.
   static/              # Handles the module's static files
   templates/           # HTML templates.
   student_dashboard.py # Module handler definitions.
+  gql.py               # GraphQL server support for the student dashboard
+  top-bar.html         # Component that contain menu items
 tests/                 # Module tests.
   functional_tests.py  # Example test file.
 ```
