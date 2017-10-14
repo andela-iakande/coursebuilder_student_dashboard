@@ -31,50 +31,57 @@ Ensure you give the target container the same name as the module name else the _
 will not be readable and this might cause import problems as well as failure in the running of your application,
 next: create a file titled install.sh. For instance, you can place the file in your desktop and copy the script below into it.
 
-```sh 
-  scripts/modules.sh \
-    --targets=coursebuilder_student_dashboard@https://github.com/andela-iakande/coursebuilder_student_dashboard.git
+```
+  sh scripts/modules.sh \
+  --targets=coursebuilder_student_dashboard@https://github.com/andela-iakande/coursebuilder_student_dashboard.git
 
-  rm -f modules/gql/gql.py
-  mv modules/coursebuilder_student_dashboard/gql.py modules/gql/
+  sleep 15
 
-  rm -f modules/explorer/_static/components/top-bar/top-bar.html
-  mv modules/coursebuilder_student_dashboard/top-bar.html modules/explorer/_static/components/top-bar/
+  cat modules/coursebuilder_student_dashboard/gql.py > modules/gql/gql.py
+
+  sleep 15
+
+  cat modules/coursebuilder_student_dashboard/top-bar.html > modules/explorer/_static/components/top-bar/top-bar.html
+
+  sleep  15
+
+  rm -f modules/coursebuilder_student_dashboard/gql.py
 ```
 After this process, 
-next,run:
+next run:
 
-  ```sh
-  ~/Desktop/install.sh
+  ```
+  sh ~/Desktop/install.sh
   ```
 
 This script will both download the student dashboard module, replace some course builder components with appropriate components needed for it to work and also link it to Course Builder.
 
  Now you can start up Course Builder with the student dashboard module installed:
 
-```sh
-sh scripts/start_in_shell.sh
-```
+  ```sh
+  sh scripts/start_in_shell.sh
+  ```
 
-To view the module in action, visit `localhost:8081/student-dashboard`.
+To view the module in action, visit `localhost:8081/student-dashboard` or visit
+localhost:8081, then click on "Student Dashboard".
 
 ## Module contents
 
 The structure of this module is
 
-```sh
-module.yaml            # Module definition file.
-scripts/
-  setup.sh             # Module configuration script.
-src/                   # Module source files.
-  static/              # Handles the module's static files
-  templates/           # HTML templates.
-  student_dashboard.py # Module handler definitions.
-  gql.py               # GraphQL server support for the student dashboard
-  top-bar.html         # Component that contain menu items
-tests/                 # Module tests.
-  functional_tests.py  # Example test file.
-```
+  ```sh
+  module.yaml            # Module definition file.
+  scripts/
+    setup.sh             # Module configuration script.
+  src/                   # Module source files.
+    static/              # Handles the module's static files
+    templates/           # HTML templates.
+    student_dashboard.py # Module handler definitions.
+    gql.py               # GraphQL server support for the student dashboard
+    top-bar.html         # Component that contain menu items
+  tests/                 # Module tests.
+    functional_tests.py  # Example test file.
+  ```
 
 Let's talk about some of the contents used in this project.
 
@@ -134,9 +141,9 @@ or you will have import problems.
 After you've downloaded and installed this module, start Course Builder normally
 to use it:
 
-```sh
-sh scripts/start_in_shell.sh
-```
+  ```sh
+  sh scripts/start_in_shell.sh
+  ```
 
 In this example, we assume you created a course with a Context Path of `/first`
 (this is what Course Builder does for you if you clicked **Create Empty Course**
@@ -159,16 +166,16 @@ For example, if the code for this module lived in
 `/$HOME/src/coursebuilder_student_dashboard`, you would first create the
 symlink by running this:
 
-```sh
-ln -s /$HOME/src/coursebuilder_student_dashboard \
-    /tmp/coursebuilder_student_dashboard
-```
+  ```sh
+  ln -s /$HOME/src/coursebuilder_student_dashboard \
+      /tmp/coursebuilder_student_dashboard
+  ```
 
 then, from your Course Builder directory, run
 
-```sh
-sh scripts/modules.sh --targets=coursebuilder_student_dashboard@/tmp/coursebuilder_student_dashboard
-```
+  ```sh
+  sh scripts/modules.sh --targets=coursebuilder_student_dashboard@/tmp/coursebuilder_student_dashboard
+  ```
 
 to install the module from local disk. All other commands then work as above.
 
