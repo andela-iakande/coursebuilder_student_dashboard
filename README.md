@@ -35,16 +35,12 @@ next: create a file titled install.sh. For instance, you can place the file in y
   sh scripts/modules.sh \
   --targets=coursebuilder_student_dashboard@https://github.com/andela-iakande/coursebuilder_student_dashboard.git
 
-  sleep 15
+  sleep 15 
 
   cat modules/coursebuilder_student_dashboard/gql.py > modules/gql/gql.py
 
-  sleep 15
-
   cat modules/coursebuilder_student_dashboard/top-bar.html > modules/explorer/_static/components/top-bar/top-bar.html
-
-  sleep  15
-
+  
   rm -f modules/coursebuilder_student_dashboard/gql.py
 ```
 After this process, 
